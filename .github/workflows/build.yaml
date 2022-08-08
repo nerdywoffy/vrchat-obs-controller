@@ -16,10 +16,12 @@ jobs:
             run: |
               mkdir bin/
 
-          - name: Setup and Build Go Binary
+          - name: Setup Go
             uses: actions/setup-go@v3
             with:
               go-version: '1.18'
+            
+          - name: Build Windows Binary
             run: 'GOOS=windows GOARCH=amd64 go build -o bin/vrchat-obs-control-win64.exe .'
 
           - name: Compress 
