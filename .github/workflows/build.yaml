@@ -6,51 +6,50 @@ on:
 
 jobs:
     build:
-        name: Build VRChat OBS Control
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v3
+      name: Build VRChat OBS Control
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
 
-          - name: Prepare binary folder
-            run: |
-              mkdir bin/
+        - name: Prepare binary folder
+          run: |
+            mkdir bin/
 
-          - name: Setup Go
-            uses: actions/setup-go@v3
-            with:
-              go-version: '1.18'
-            
-          - name: Build Windows Binary
-            run: 'GOOS=windows GOARCH=amd64 go build -o bin/vrchat-obs-control-win64.exe .'
+        - name: Setup Go
+          uses: actions/setup-go@v3
+          with:
+            go-version: '1.18'
+          
+        - name: Build Windows Binary
+          run: 'GOOS=windows GOARCH=amd64 go build -o bin/vrchat-obs-control-win64.exe .'
 
-          - name: Compress 
-            run: 'tar -cvf vrc-obs.tar bin'
+        - name: Compress 
+          run: 'tar -cvf vrc-obs.tar bin'
 
-          - name: Upload artifacts
-            uses: actions/upload-artifact@v2
-            with:
-              name: vrc-obs
-              path: vrc-obs.tar
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: vrc-obs
+            path: vrc-obs.tar
 
     release:
-          name: Release
-          runs-on: ubuntu-latest
-          needs: build
+      name: Release
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+        - name: Download artifacts
+          uses: actions/download-artifact@v2
+          with:
+            name: vrc-obs
 
-          steps:
-            - name: Download artifacts
-              uses: actions/download-artifact@v2
-              with:
-                name: vrc-obs
+        - name: Extract
+          run: 'tar xf vrc-obs.tar'
 
-            - name: Extract
-              run: 'tar xf vrc-obs.tar'
-
-            - name: Create release
-              uses: "lauravuo/action-automatic-releases@latest"
-              with:
-                repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                prerelease: false
-                auto_generate_release_notes: true
-                files: bin/*
+        - name: Create release
+          uses: "lauravuo/action-automatic-releases@latest"
+          with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            prerelease: false
+            auto_generate_release_notes: true
+            files: bin/*
