@@ -1,0 +1,34 @@
+OSC:
+  Sender:
+    Host: "127.0.0.1"
+    Port: 9000
+  Receiver:
+    Host: "127.0.0.1"
+    Port: 9001
+
+OBS:
+  WebsocketVersion: "v4"
+  Credential:
+    Host: "localhost"
+    Port: 4444
+    Password: "your-secure-obs-password-here"
+  Scene:
+    - Number: 1
+      Name: "Main Screen"
+    - Number: 2
+      Name: "VRChat Screen #1"
+    - Number: 3
+      Name: "VRChat Screen #2"
+    - Number: 4
+      Name: "VRChat Screen #3"
+    - Number: 5
+      Name: "Closing #1"
+    - Number: 6
+      Name: "Closing #2"
+    - Number: 7
+      Name: "Closing #3"
+    - Number: 8
+      Name: "Avatar Only"
+
+Logs:
+  Level: "info"
