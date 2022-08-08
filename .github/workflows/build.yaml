@@ -25,7 +25,7 @@ jobs:
             run: 'GOOS=windows GOARCH=amd64 go build -o bin/vrchat-obs-control-win64.exe .'
 
           - name: Compress 
-            run: tar -cvf vrc-obs.tar bin
+            run: 'tar -cvf vrc-obs.tar bin'
 
           - name: Upload artifacts
             uses: actions/upload-artifact@v2
@@ -45,7 +45,7 @@ jobs:
                 name: vrc-obs
 
             - name: Extract
-              run: tar xf vrc-obs.tar
+              run: 'tar xf vrc-obs.tar'
 
             - name: Create release
               uses: "lauravuo/action-automatic-releases@latest"
