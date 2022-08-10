@@ -1,12 +1,12 @@
-name: Build VRChat OBS Control
+name: Build "Dev Build" VRChat OBS Control
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - "master"
 
 jobs:
     build:
-      name: Build VRChat OBS Control (Windows)
+      name: Build "Dev Build" VRChat OBS Control (Windows)
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
