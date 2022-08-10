@@ -1,0 +1,56 @@
+name: Build VRChat OBS Control
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+    build:
+      name: Build VRChat OBS Control (Windows)
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Prepare binary folder
+          run: |
+            mkdir bin/
+            cp .github/assets/config.example.yaml bin/config.yaml
+
+        - name: Setup Go
+          uses: actions/setup-go@v3
+          with:
+            go-version: '1.18'
+          
+        - name: Build Windows Binary
+          run: 'GOOS=windows GOARCH=amd64 go build -o bin/vrchat-obs-control-win64.exe .'
+
+        - name: Compress 
+          run: 'zip -r vrchat-obs-control-win64.zip bin/'
+
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: vrchat-obs-control-win64
+            path: vrchat-obs-control-win64.zip
+
+    release:
+      name: Release
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+        - name: Download artifacts
+          uses: actions/download-artifact@v2
+          with:
+            name: vrchat-obs-control-win64
+
+        - name: Create release
+          uses: "lauravuo/action-automatic-releases@latest"
+          with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            draft: true
+            prerelease: true
+            auto_generate_release_notes: true
+            title: "Latest Development Build"
+            files: |
+              vrchat-obs-control-win64.zip
