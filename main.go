@@ -7,6 +7,7 @@ import (
 	"syscall"
 
 	"github.com/nerdywoffy/vrchat-obs-controller/obs"
+	"github.com/nerdywoffy/vrchat-obs-controller/obs/streamlabs"
 	v4 "github.com/nerdywoffy/vrchat-obs-controller/obs/v4"
 	v5 "github.com/nerdywoffy/vrchat-obs-controller/obs/v5"
 	"github.com/nerdywoffy/vrchat-obs-controller/osc"
@@ -61,6 +62,8 @@ func main() {
 		_obs = v4.New(_log)
 	case "v5":
 		_obs = v5.New(_log)
+	case "streamlabs":
+		_obs = streamlabs.New(_log)
 	default:
 		_log.Fatal("unknown OBS version")
 	}

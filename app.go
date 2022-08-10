@@ -39,6 +39,7 @@ func runPoller() {
 		_log.Error(err)
 		return
 	}
+	_log.Debugf("IsStreaming: %v", isStreaming)
 	msg := osc.NewMessage(StreamStatus)
 	msg.Append(isStreaming)
 	_osc.GetClient().Client().Send(msg)
@@ -49,6 +50,7 @@ func runPoller() {
 		_log.Error(err)
 		return
 	}
+	_log.Debugf("IsRecording: %v", isRecording)
 	msg = osc.NewMessage(RecordStatus)
 	msg.Append(isRecording)
 	_osc.GetClient().Client().Send(msg)
@@ -59,6 +61,7 @@ func runPoller() {
 		_log.Error(err)
 		return
 	}
+	_log.Debugf("IsInstantReplay: %v", isInstantReplay)
 	msg = osc.NewMessage(ReplayBufferStatus)
 	msg.Append(isInstantReplay)
 	_osc.GetClient().Client().Send(msg)
@@ -68,6 +71,8 @@ func runPoller() {
 	if err != nil {
 		_log.Error(err)
 	}
+	_log.Debugf("ActiveScene: %v", currentSceneNumber)
+
 	if currentSceneNumber >= 0 {
 		msg = osc.NewMessage(SceneSwitchSelector)
 		msg.Append(int32(currentSceneNumber))
