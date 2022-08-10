@@ -12,7 +12,7 @@ OBS:
     Host: "localhost"
     Port: 4444
     Password: "your-secure-obs-password-here"
-  Scene:
+  Scenes:
     - Number: 1
       Name: "Main Screen"
     - Number: 2
