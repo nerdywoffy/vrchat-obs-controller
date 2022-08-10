@@ -50,6 +50,7 @@ jobs:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
             draft: true
             prerelease: true
+            automatic_release_tag: "dev"
             auto_generate_release_notes: true
             title: "Latest Development Build"
             files: |
