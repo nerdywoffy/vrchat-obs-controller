@@ -1,10 +1,10 @@
-name: Lint and Build
+name: Vet and Lint Pull Request
 on:
   push
 
 jobs:
     build:
-        name: Build VRChat OBS Control
+        name: Vet and Lint Pull Request
         runs-on: ubuntu-latest
         steps:
           - name: Checkout
