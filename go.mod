@@ -3,16 +3,18 @@ module github.com/nerdywoffy/vrchat-obs-controller
 go 1.18
 
 require (
-	github.com/andreykaipov/goobs v0.8.0
+	github.com/andreykaipov/goobs v0.10.0
 	github.com/hypebeast/go-osc v0.0.0-20220308234300-cec5a8a1e5f5
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.12.0
 )
 
 require (
+	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d // indirect

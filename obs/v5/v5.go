@@ -1,71 +1,52 @@
 package v5
 
 import (
+	"fmt"
+
 	"github.com/nerdywoffy/vrchat-obs-controller/obs"
 
+	"github.com/andreykaipov/goobs"
 	"github.com/sirupsen/logrus"
 )
 
 type obsv5 struct {
-	state obs.OBSState
+	log    *logrus.Logger
+	client *goobs.Client
+	state  obs.OBSState
+	scenes map[int]obs.OBSScene
 }
 
 func New(log *logrus.Logger) obs.OBSWebsocketAPI {
-	return &obsv5{}
+	return &obsv5{
+		log:    log,
+		scenes: make(map[int]obs.OBSScene),
+	}
 }
 
-func (v4 *obsv5) Start(obs.OBSCredential) error {
-	panic("not implemented yet")
-}
+func (v5 *obsv5) Start(credential obs.OBSCredential) error {
+	options := []goobs.Option{}
 
-func (v4 *obsv5) ToggleStream() error {
-	panic("not implemented yet")
+	// Add password to options
+	v5.log.Infof("Connecting to OBS Websocket v5 on %s:%d", credential.Host, credential.Port)
+	if len(credential.Password) > 0 {
+		v5.log.Infoln("Password set, will connecting with password!")
+		options = append(options, goobs.WithPassword(credential.Password))
+	}
 
-}
+	// Start OBS v5 Client
+	client, err := goobs.New(
+		fmt.Sprintf("%s:%d", credential.Host, credential.Port),
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+	v5.client = client
 
-func (v4 *obsv5) ToggleRecord() error {
-	panic("not implemented yet")
-
-}
-
-func (v4 *obsv5) ToggleInstantReplay() error {
-	panic("not implemented yet")
-
-}
-
-func (v4 *obsv5) SaveInstantReplay() error {
-	panic("not implemented yet")
-
-}
-
-func (v4 *obsv5) SetScene(scenes []obs.OBSScene) error {
-	panic("not implemented yet")
-}
-
-func (v4 *obsv5) ToggleToSceneName(sceneName string) error {
-	panic("not implemented yet")
-}
-
-func (v4 *obsv5) ToggleToSceneNumber(number int) error {
-	panic("not implemented yet")
+	go v5.handleStreamUpdate()
+	return nil
 }
 
 func (v5 *obsv5) GetState() (obs.OBSState, error) {
 	return v5.state, nil
-}
-
-func (v5 *obsv5) GetStatusStream() (bool, error) {
-	panic("not implemented yet")
-}
-
-func (v5 *obsv5) GetStatusRecord() (bool, error) {
-	panic("not implemented yet")
-}
-
-func (v5 *obsv5) GetStatusInstantReplay() (bool, error) {
-	panic("not implemented yet")
-}
-
-func (v5 *obsv5) GetCurrentSceneNumber() (int, error) {
-	panic("not implemented yet")
 }
